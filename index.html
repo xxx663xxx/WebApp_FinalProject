@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+
+		<title>ffpaint</title>
+		<!--BootStrap-->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="google-icons/googleIcon.css" rel="stylesheet">
+	
+		<style>
+			#canvas-container {
+				width: 100%;
+				text-align:center;
+			}
+		
+			#gray-color{
+				color:gray;
+			}
+		
+			canvas {
+				display: inline;
+			}			
+		
+			button{
+				margin: 3px;
+			}
+		
+			.open-file-modal-body {
+				height: 400px;
+				overflow:auto;
+			}
+		</style>
+	
+		<!--ffpaint-->
+		<script src="src/presentLayer.js" defer></script>
+		<script src="app.js" defer></script>
+		</head>
+
+	<body>
+		<!--<a id="aTag" href="#" download="dl.png">下載</a>
+		<a id="aTag2" href="#" >載入圖片</a>-->
+	
+		<!--Save File Modal-->
+		<div class="modal fade" id="saveFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Save</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-inline" style="text-align: center;">
+							<div class="form-group" align="center" >
+								<label for="filePath">File Name</label>
+								<input type="text" class="form-control" id="fileName">
+							</div>					
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!--Opne File Modal-->
+		<div class="modal fade scroll-modal" id="openFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Open File</h4>
+					</div>
+					<div class="modal-body open-file-modal-body">
+						<div class="panel panel-info"><!--panel 1-->
+							<div class="panel-body">
+								<div class="row">
+								<div class="col-xs-6">
+									<img src="test.jpg" class="img-responsive image" alt="Responsive image">
+								</div>
+								<div class="col-xs-6">
+									<p>File name:</p>
+									<p>Last Edit:</p>
+									<p>Type:</p>
+									<p>Size:</p>
+								</div>
+								</div>
+							</div>
+						</div>
+				
+						<div class="panel panel-default"><!--panel 2-->
+							<div class="panel-body">
+								<div class="row">
+								<div class="col-xs-6">
+									<img src="test2.jpg" class="img-responsive image" alt="Responsive image">
+								</div>
+								<div class="col-xs-6">
+									<p>File name:</p>
+									<p>Last Edit:</p>
+									<p>Type:</p>
+									<p>Size:</p>
+								</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="panel panel-default"><!--panel 3-->
+							<div class="panel-body">
+								<div class="row">
+								<div class="col-xs-6">
+									<img src="test3.jpg" class="img-responsive image" alt="Responsive image">
+								</div>
+								<div class="col-xs-6">
+									<p>File name:</p>
+									<p>Last Edit:</p>
+									<p>Type:</p>
+									<p>Size:</p>
+								</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="panel panel-default"><!--panel 4-->
+							<div class="panel-body">
+								<div class="row">
+								<div class="col-xs-6">
+									<img src="test4.jpg" class="img-responsive image" alt="Responsive image">
+								</div>
+								<div class="col-xs-6">
+									<p>File name:</p>
+									<p>Last Edit:</p>
+									<p>Type:</p>
+									<p>Size:</p>
+								</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary">Open</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- Choose Stroke Color Modal -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="strokeColorModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Choose a color</h4>
+					</div>
+					<div class="modal-body">
+						<p>One fine body</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+		<!-- Choose Fill color Modal -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="fillColorModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Choose a color</h4>
+					</div>
+					<div class="modal-body">
+						<p>body 2</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+		<!--Tool Bar-->
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<div style="text-align:center">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							<span class="material-icons" aria-hidden="true" style="color:gray;">keyboard_arrow_down</span>
+						</a>
+					</div>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				<div class="panel-body">
+				<div style="text-align:center">
+					<!--Save File Icon-->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#saveFileModal">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">save</span> 
+					</button>
+	
+					<!--Open File Icon-->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#openFileModal">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">folder</span>
+					</button>
+	
+					<!--Undo Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">undo</span>
+					</button>
+	
+					<!--Redo Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">redo</span>
+					</button>
+	
+					<!--Stroke Color Icon-->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#strokeColorModal">
+						<span class="material-icons" aria-hidden="true" style="color:#2E95EF;">panorama_fish_eye</span><!--color_lens lens stop brightness_1-->
+					</button>
+	
+					<!--Fill Color Icon-->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#fillColorModal">
+						<span class="material-icons" aria-hidden="true" style="color:orange;">brightness_1</span><!--color_lens-->
+					</button>
+	
+					<!--Pick Color Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">colorize</span>
+					</button>
+	
+					<!--Fill Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">format_color_fill</span>
+					</button>
+	
+					<!--Rect Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">crop_din</span>
+					</button>
+	
+					<!--Circle Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">panorama_fish_eye</span><!--color_lens lens stop brightness_1-->
+					</button>
+	
+					<!--Line Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">remove</span>
+					</button>
+		
+					<!--Pencil Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">edit</span>
+					</button>
+	
+					<!--Text Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">font_download</span>
+					</button>
+	
+					<!--Text Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">zoom_in</span>
+					</button>
+	
+					<!--Text Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">zoom_out</span>
+					</button>
+	
+					<!--Text Icon-->
+					<button type="button" class="btn btn-default">
+						<span class="material-icons" aria-hidden="true" style="color:gray;">photo_size_select_large</span>
+					</button>
+				</div><!--text-align-->
+				</div><!--.panel-body-->
+				</div><!--#collapseOne-->
+			</div><!--.panel-->
+		</div><!--.panel-group-->
+	
+	<!--Main Canvas-->
+	<div id="canvas-container">
+		<canvas id="myCanvas" width="0" height="0" >
+			Your device doesn't support canvas</canvas>
+	</div>
+	
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="jquery/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	
+	
+  </body>
+</html>

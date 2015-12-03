@@ -1,0 +1,27 @@
+{
+  "version":"1.0",
+  "name": "finalProject",
+  "description": "An APP that let you draw a picture",
+  "launch_path": "/index.html",
+  "icons": {
+    "16": "/icons/icon16x16.png",
+    "48": "/icons/icon48x48.png",
+    "60": "/icons/icon60x60.png",
+    "128": "/icons/icon128x128.png"
+  },
+  "type": "privileged", 
+  "permissions": {
+    "systemXHR": {},
+    "network-http": {},
+    "network-tcp": {},
+	"tcp-socket": {},
+	"device-storage:videos":  { "access": "readwrite" },
+	"device-storage:pictures":{ "access": "readwrite" },
+	"device-storage:sdcard":  { "access": "readwrite" },
+	"device-storage:music":   { "access": "readwrite" }
+  },
+  "developer": {
+    "name": "xxx663xxx",
+    "url": "https://github.com/xxx663xxx"
+  }
+}
