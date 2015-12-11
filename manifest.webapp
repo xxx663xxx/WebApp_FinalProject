@@ -1,6 +1,6 @@
 {
   "version":"1.0",
-  "name": "finalProject",
+  "name": "FFPaint",
   "description": "An APP that let you draw a picture",
   "launch_path": "/index.html",
   "icons": {

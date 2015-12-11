@@ -13,27 +13,38 @@
 			#canvas-container {
 				width: 100%;
 				text-align:center;
+				padding-bottom: 20px;
 			}
 		
 			#gray-color{
 				color:gray;
 			}
-		
+			
 			canvas {
 				display: inline;
+				overflow: scroll;
+				box-shadow: 10px 10px 5px grey;
 			}			
 		
 			button{
 				margin: 3px;
 			}
 		
-			.open-file-modal-body {
-				height: 400px;
-				overflow:auto;
+			#sColorPreView{
+				background-color:#2E95EF
+			}
+		
+			#fColorPreView{
+				background-color:orange
+			}
+			
+			input { 
+				text-align: center; 
 			}
 		</style>
 	
 		<!--ffpaint-->
+		<script src="src/scrollBar.js" defer></script>
 		<script src="src/presentLayer.js" defer></script>
 		<script src="app.js" defer></script>
 		</head>
@@ -50,16 +61,16 @@
 						<h4 class="modal-title" id="myModalLabel">Save</h4>
 					</div>
 					<div class="modal-body">
-						<form class="form-inline" style="text-align: center;">
-							<div class="form-group" align="center" >
-								<label for="filePath">File Name</label>
-								<input type="text" class="form-control" id="fileName">
-							</div>					
+						<form>
+							<div class="form-group">
+								<label for="fileName">File Name</label>
+								<input type="text" class="form-control" id="fileName" placeholder="">
+							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary">Save</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="fileSave">Save</button>
 					</div>
 				</div>
 			</div>
@@ -76,71 +87,35 @@
 						<div class="panel panel-info"><!--panel 1-->
 							<div class="panel-body">
 								<div class="row">
-								<div class="col-xs-6">
-									<img src="test.jpg" class="img-responsive image" alt="Responsive image">
+									<div class="col-xs-12">
+										<img src="" id="inputImgPre" class="img-responsive image" alt="Image Data">
+									</div>
 								</div>
+								<div class="row">	
 								<div class="col-xs-6">
-									<p>File name:</p>
-									<p>Last Edit:</p>
-									<p>Type:</p>
-									<p>Size:</p>
+									<p id="inputNamePre">File Name:</p>
+									<!--<p>Last Edit:</p>-->
+									<!--<p>Type:</p>-->
+									<p id="inputSizePre">File Size:</p>
 								</div>
 								</div>
 							</div>
-						</div>
-				
-						<div class="panel panel-default"><!--panel 2-->
-							<div class="panel-body">
-								<div class="row">
-								<div class="col-xs-6">
-									<img src="test2.jpg" class="img-responsive image" alt="Responsive image">
-								</div>
-								<div class="col-xs-6">
-									<p>File name:</p>
-									<p>Last Edit:</p>
-									<p>Type:</p>
-									<p>Size:</p>
-								</div>
-								</div>
+						</div><!--.panel-body-->
+						<form>
+							<div class="form-group">
+								<label for="openFileInput">File input</label>
+								<input type="file" id="openFileInput">
 							</div>
-						</div>
-						
-						<div class="panel panel-default"><!--panel 3-->
-							<div class="panel-body">
-								<div class="row">
-								<div class="col-xs-6">
-									<img src="test3.jpg" class="img-responsive image" alt="Responsive image">
-								</div>
-								<div class="col-xs-6">
-									<p>File name:</p>
-									<p>Last Edit:</p>
-									<p>Type:</p>
-									<p>Size:</p>
-								</div>
-								</div>
+							<div class="form-group">
+								<label for="zoomRatio">Zoom Ratio</label>
+								<input type="number" class="form-control" id="zoomRatio" placeholder="">
 							</div>
-						</div>
-						
-						<div class="panel panel-default"><!--panel 4-->
-							<div class="panel-body">
-								<div class="row">
-								<div class="col-xs-6">
-									<img src="test4.jpg" class="img-responsive image" alt="Responsive image">
-								</div>
-								<div class="col-xs-6">
-									<p>File name:</p>
-									<p>Last Edit:</p>
-									<p>Type:</p>
-									<p>Size:</p>
-								</div>
-								</div>
-							</div>
-						</div>
+						</form>
 						
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary">Open</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="openSave">Open</button>
 					</div>
 				</div>
 			</div>
@@ -154,17 +129,49 @@
 						<h4 class="modal-title">Choose a color</h4>
 					</div>
 					<div class="modal-body">
-						<p>One fine body</p>
+						<form class="form-horizontal">							
+							<div class="form-group" style="padding-top:10px">
+								<label for="rRange" class="col-xs-1 control-label" style="padding-top:0px">R:</label>
+								<div class="col-sm-11">
+									<input type="range" class="rRange" id="sRRange" style="vertical-align:middle;" max="255">
+								</div>
+							</div>
+							
+							<div class="form-group" style="padding-top:10px">
+								<label for="gRange" class="col-xs-1 control-label" style="padding-top:0px">G:</label>
+								<div class="col-sm-11">
+									<input type="range" class="gRange" id="sGRange" style="vertical-align: middle;" max="255">
+								</div>
+							</div>
+							
+							<div class="form-group" style="padding-top:10px">
+								<label for="bRange" class="col-xs-1 control-label" style="padding-top:0px">B:</label>
+								<div class="col-sm-11">
+									<input type="range" class="" id="sBRange" style="vertical-align:middle;" max="255">
+								</div>
+							</div>
+							
+							<div class="form-group" style="margin-bottom:0px">
+								<div class="col-sm-12">
+									<div class="panel" style="margin-bottom:0px">
+										<div class="panel-body" id="sColorPreView" >
+											#2e95ef
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="sColorSave">Save changes</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 	
-		<!-- Choose Fill color Modal -->
+		<!-- Choose Fill Color Modal -->
 		<div class="modal fade" tabindex="-1" role="dialog" id="fillColorModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -172,22 +179,286 @@
 						<h4 class="modal-title">Choose a color</h4>
 					</div>
 					<div class="modal-body">
-						<p>body 2</p>
+						<form class="form-horizontal">							
+							<div class="form-group" style="padding-top:10px">
+								<label for="rRange" class="col-xs-1 control-label" style="padding-top:0px">R:</label>
+								<div class="col-sm-11">
+									<input type="range" class="" id="fRRange" style="vertical-align: middle;" max="255">
+								</div>
+							</div>
+							
+							<div class="form-group" style="padding-top:10px">
+								<label for="gRange" class="col-xs-1 control-label" style="padding-top:0px">G:</label>
+								<div class="col-sm-11">
+									<input type="range" class="" id="fGRange" style="vertical-align: middle;" max="255">
+								</div>
+							</div>
+							
+							<div class="form-group" style="padding-top:10px">
+								<label for="bRange" class="col-xs-1 control-label" style="padding-top:0px">B:</label>
+								<div class="col-sm-11">
+									<input type="range" class="" id="fBRange" style="vertical-align:middle;" max="255">
+								</div>
+							</div>
+							
+							<div class="form-group" style="margin-bottom:0px">
+								<div class="col-sm-12">
+									<div class="panel" style="margin-bottom:0px">
+										<div class="panel-body" id="fColorPreView">
+											#ffa500
+										</div>
+									</div>
+								</div>
+							</div>
+				
+						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="fColorSave">Save changes</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
+	
+		<!-- Pick Color Modal-->
+		<div class="modal fade" id="pickColorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Save Color To</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label>Stroke Color</label>
+							</div>
+							<div class="form-group" style="text-align:center">
+								<input type="checkbox" id="pickStroke">
+							</div>
+							<div class="form-group">
+								<label>Fill Color</label>
+							</div>
+							<div class="form-group" style="text-align:center">
+								<input type="checkbox" id="pickFill">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="pickSave">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Shape Settings Modal-->
+		<div class="modal fade" id="shapeSettingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Shape Settings</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="strokeWidth">Stroke Width</label>
+								<input type="number" class="form-control" id="shapeStrokeWidth" style="text-align:center">
+							</div>
+							<div class="form-group">
+								<label>Fill</label>
+							</div>
+							<div class="form-group" style="text-align:center">
+								<input type="checkbox" id="shapeFill">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="shapeSave">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Line Settings Modal-->
+		<div class="modal fade" id="lineSettingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Line Settings</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="lineWidth">Line Width</label>
+								<input type="number" class="form-control" id="lineWidth" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="lineCapOptions">Line Cap</label>
+								<div class="radio">
+									<label>
+										<input type="radio" name="lineCapOptions" class="lineCap" id="buttOption" value="butt" >
+										butt
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="lineCapOptions" class="lineCap" id="roundOption" value="round" >
+										round
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="lineCapOptions" class="lineCap" id="squareOption" value="square" >
+										square
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lineJoinOptions">Line Join</label>
+								<div class="radio">
+									<label>
+										<input type="radio" name="lineJoinOptions" class="lineJoin" id="bevelOption" value="bevel" >
+										bevel
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="lineJoinOptions" class="lineJoin" id="roundOption" value="round" >
+										round
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="lineJoinOptions" class="lineJoin" id="milterOption" value="milter" >
+										milter
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="strokeWidth">Miter Limit</label>
+								<input type="number" class="form-control" id="miterLimit" placeholder="">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="LineSave">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Text Settings Modal-->
+		<div class="modal fade" id="textSettingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Text Settings</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="strokeWidth">Text Size</label>
+								<input type="number" class="form-control" id="strokeWidth" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="strokeWidth">Text Font</label>
+								<select class="form-control">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Resize Modal-->
+		<div class="modal fade" id="resizeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Resize Image</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="strokeWidth">Width</label>
+								<input type="number" class="form-control" id="strokeWidth" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="strokeWidth">Height</label>
+								<input type="number" class="form-control" id="strokeWidth" placeholder="">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary">Resize</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Connect Modal-->
+		<div class="modal fade" id="connectSettingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Connect to server</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="strokeWidth">Host Name</label>
+								<input type="text" class="form-control" id="hostnmae" placeholder="">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="closeConnect">Close Connect</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="connectButton">Connect</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Open Server Modal-->
+		<div class="modal fade" id="openSettingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Open Server</h4>
+					</div>
+					<div class="modal-body">
+						<p>Oen Server?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="closeServer">Close Server</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="openServerButton">Open</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<!--Tool Bar-->
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingOne">
 					<div style="text-align:center">
-						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 							<span class="material-icons" aria-hidden="true" style="color:gray;">keyboard_arrow_down</span>
 						</a>
 					</div>
@@ -196,83 +467,63 @@
 				<div class="panel-body">
 				<div style="text-align:center">
 					<!--Save File Icon-->
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#saveFileModal">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#saveFileModal" id="saveFileButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">save</span> 
 					</button>
 	
 					<!--Open File Icon-->
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#openFileModal">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#openFileModal" id="openButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">folder</span>
 					</button>
 	
 					<!--Undo Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" id="undoButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">undo</span>
 					</button>
 	
 					<!--Redo Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" id="redoButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">redo</span>
 					</button>
 	
 					<!--Stroke Color Icon-->
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#strokeColorModal">
-						<span class="material-icons" aria-hidden="true" style="color:#2E95EF;">panorama_fish_eye</span><!--color_lens lens stop brightness_1-->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#strokeColorModal" id="strokeColorButton">
+						<span class="material-icons" aria-hidden="true" style="color:#2E95EF;" id="strokeColorIcon">panorama_fish_eye</span><!--color_lens lens stop brightness_1-->
 					</button>
 	
 					<!--Fill Color Icon-->
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#fillColorModal">
-						<span class="material-icons" aria-hidden="true" style="color:orange;">brightness_1</span><!--color_lens-->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#fillColorModal" id="fillColorButton">
+						<span class="material-icons" aria-hidden="true" style="color:orange;" id="fillColorIcon">brightness_1</span><!--color_lens-->
 					</button>
 	
 					<!--Pick Color Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#pickColorModal" id="pickColorButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">colorize</span>
 					</button>
 	
 					<!--Fill Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" id="fillButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">format_color_fill</span>
 					</button>
 	
 					<!--Rect Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#shapeSettingModal" id="rectButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">crop_din</span>
 					</button>
 	
 					<!--Circle Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#shapeSettingModal" id="arcButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">panorama_fish_eye</span><!--color_lens lens stop brightness_1-->
 					</button>
 	
 					<!--Line Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#lineSettingModal" id="lineButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">remove</span>
 					</button>
 		
 					<!--Pencil Icon-->
-					<button type="button" class="btn btn-default">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#lineSettingModal" id="pencilButton">
 						<span class="material-icons" aria-hidden="true" style="color:gray;">edit</span>
-					</button>
-	
-					<!--Text Icon-->
-					<button type="button" class="btn btn-default">
-						<span class="material-icons" aria-hidden="true" style="color:gray;">font_download</span>
-					</button>
-	
-					<!--Text Icon-->
-					<button type="button" class="btn btn-default">
-						<span class="material-icons" aria-hidden="true" style="color:gray;">zoom_in</span>
-					</button>
-	
-					<!--Text Icon-->
-					<button type="button" class="btn btn-default">
-						<span class="material-icons" aria-hidden="true" style="color:gray;">zoom_out</span>
-					</button>
-	
-					<!--Text Icon-->
-					<button type="button" class="btn btn-default">
-						<span class="material-icons" aria-hidden="true" style="color:gray;">photo_size_select_large</span>
 					</button>
 				</div><!--text-align-->
 				</div><!--.panel-body-->
