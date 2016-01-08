@@ -11,14 +11,14 @@
   },
   "type": "privileged", 
   "permissions": {
-    "systemXHR": {},
-    "network-http": {},
-    "network-tcp": {},
-	"tcp-socket": {},
-	"device-storage:videos":  { "access": "readwrite" },
-	"device-storage:pictures":{ "access": "readwrite" },
-	"device-storage:sdcard":  { "access": "readwrite" },
-	"device-storage:music":   { "access": "readwrite" }
+	"device-storage:pictures":{ 
+		"access": "readwrite",
+		"description": "This App provides import function, it needs permission to access pictures you want to import"
+	},
+	"device-storage:sdcard":  { 
+		"access": "readwrite",
+		"description": "This App provides import function, it needs permission to access pictures you want to import"
+	}
   },
   "developer": {
     "name": "xxx663xxx",
